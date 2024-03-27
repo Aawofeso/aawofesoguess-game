@@ -208,4 +208,60 @@ $(document).ready(function () {
         $('#resetbtn').click();
     });
 
+    // add listener to input field 
+    document.getElementById('gno').addEventListener('blur', function() {
+        validateInput();
+      });
+
+    /* validate range according to level */ 
+    function validateInput() {
+        var inputNumber = parseInt(document.getElementById('gno').value);
+        var selectedLevel = getSelectedLevel();
+        //alert(selectedLevel+" - "+inputNumber);
+    
+        if (isNaN(inputNumber)) {
+          displayWarning("Please enter a valid number");
+        } else if (selectedLevel === 0 && (inputNumber < 0 || inputNumber > 1)) {
+          displayWarning("For Easy level, enter a number between 0 and 1");
+        } else if (selectedLevel === 1 && (inputNumber < 0 || inputNumber > 100)) {
+          displayWarning("For Medium level, enter a number between 0 and 100");
+        } else if (selectedLevel === 3 && (inputNumber < 0 || inputNumber > 1000)) {
+          displayWarning("For Hard level, enter a number between 0 and 1000");
+        } else {
+          hideWarning();
+          enableSubmitButton();
+        }
+      }
+      // Get selected level
+      function getSelectedLevel() {
+        var levelRadios = document.getElementsByName('radio');
+        
+        for (var i = 0; i < levelRadios.length; i++) {
+          if (levelRadios[i].checked) {
+            return parseInt(levelRadios[i].value);
+          }
+        }
+        return -1; // No level selected
+        
+      }
+
+      function displayWarning(message) {
+        var warningText = document.getElementById('warningText');
+        warningText.innerHTML = message;
+        warningText.style.display = 'block';
+        disableSubmitButton();
+      }
+      function hideWarning() {
+        document.getElementById('warningText').style.display = 'none';
+      }
+
+      function enableSubmitButton()
+      {
+        document.getElementById('gbtn').disabled = false;
+      }
+      function disableSubmitButton()
+      {
+         document.getElementById('gbtn').disabled = true;
+      }
+
 });

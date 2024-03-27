@@ -168,8 +168,11 @@ input:checked + .slider:before {
 
 
 
-
-
+/* Guess button disabled state */
+#gbtn[disabled]
+{
+    color: #ccc;
+}
 
 
 
